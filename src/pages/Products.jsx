@@ -7,17 +7,17 @@ export default function Products() {
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedTag, setSelectedTag] = useState("");
     const productsPerPage = 6;
 
     useEffect(() => {
         fetchProducts();
-    }, [currentPage]);
+    }, [currentPage, selectedTag]);
 
     const fetchProducts = () => {
         setLoading(true);
-        fetch(`https://tech-prod-server.vercel.app/products?search=${searchTerm}&page=${currentPage}&limit=${productsPerPage}`)
+        fetch(`https://tech-prod-server.vercel.app/products?page=${currentPage}&limit=${productsPerPage}`)
             .then(res => res.json())
             .then(data => {
                 const activeProducts = data.filter(product => product.status === true);
@@ -25,19 +25,13 @@ export default function Products() {
                 setLoading(false);
             })
             .catch(error => {
-                
                 setLoading(false);
             });
     };
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-    };
-
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
+    const handleTagFilter = (tag) => {
+        setSelectedTag(tag);
         setCurrentPage(1);
-        fetchProducts();
     };
 
     const handlePageChange = (newPage) => {
@@ -48,27 +42,28 @@ export default function Products() {
         return <div className="flex min-h-screen justify-center"> <div className='loading loading-spinner'></div> </div>
     }
 
+    const filteredProducts = selectedTag
+        ? products.filter(product => product.tags.includes(selectedTag))
+        : products;
+
     return (
         <div className='container mx-auto w-11/12 py-10'>
             <Helmet>
                 <title> Products - TechProd </title>
             </Helmet>
             <Heading heading='All Products' subHeading='Pick from our Features'></Heading>
-            <form className="mb-5 mt-5" onSubmit={handleSearchSubmit}>
-                <label className="input input-bordered flex items-center gap-2">
-                    <input
-                        type="text"
-                        className="grow"
-                        placeholder="Search by tags"
-                        value={searchTerm}
-                        onChange={handleSearch}
-                    />
-                    <button type="submit" className="btn btn-primary">Search</button>
-                </label>
-            </form>
-
+            
+            <div className="flex gap-2 mb-5 mt-5 justify-center">
+                {Array.from(new Set(products.flatMap(product => product.tags))).map((tag, index) => (
+                    <button key={index} className={`btn btn-outline btn-sm ${selectedTag === tag ? 'btn-primary' : ''}`} onClick={() => handleTagFilter(tag)}>
+                        {tag}
+                    </button>
+                ))}
+                {selectedTag && <button className="btn btn-sm btn-secondary" onClick={() => setSelectedTag("")}>Clear Filter</button>}
+            </div>
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
-                {products.map((product, index) => <ProductItem product={product} key={index}></ProductItem>)}
+                {filteredProducts.map((product, index) => <ProductItem product={product} key={index}></ProductItem>)}
             </div>
 
             <div className="flex items-center justify-center mt-5">
@@ -82,7 +77,7 @@ export default function Products() {
                 <span className="mx-3">Page {currentPage}</span>
                 <button
                     className="btn btn-outline"
-                    disabled={products.length < productsPerPage}
+                    disabled={filteredProducts.length < productsPerPage}
                     onClick={() => handlePageChange(currentPage + 1)}
                 >
                     Next
