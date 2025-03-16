@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "Inter", serif;
+}
+
+.small-button {
+    color: #FFF;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 1s;
+}
+.small-button:hover {
+    background-color: red;
+}

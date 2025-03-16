@@ -1,0 +1,35 @@
+[
+    {
+      "id": 1,
+      "productName": "Wireless Noise-Canceling Headphones",
+      "productImage": "https://via.placeholder.com/300x200?text=Headphones",
+      "tags": ["Electronics", "Audio", "Wireless"],
+      "votes": 120,
+      "timestamp": "2024-06-10T14:30:00Z"
+    },
+    {
+      "id": 2,
+      "productName": "Smartwatch Pro X",
+      "productImage": "https://via.placeholder.com/300x200?text=Smartwatch",
+      "tags": ["Wearable", "Fitness", "Tech"],
+      "votes": 85,
+      "timestamp": "2024-06-12T09:00:00Z"
+    },
+    {
+      "id": 3,
+      "productName": "Ergonomic Office Chair",
+      "productImage": "https://via.placeholder.com/300x200?text=Office+Chair",
+      "tags": ["Furniture", "Comfort", "Office"],
+      "votes": 200,
+      "timestamp": "2024-06-11T11:45:00Z"
+    },
+    {
+      "id": 4,
+      "productName": "Portable Coffee Maker",
+      "productImage": "https://via.placeholder.com/300x200?text=Coffee+Maker",
+      "tags": ["Kitchen", "Portable", "Coffee"],
+      "votes": 150,
+      "timestamp": "2024-06-13T08:20:00Z"
+    }
+  ]
+  
