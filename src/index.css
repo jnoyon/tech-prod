@@ -16,3 +16,6 @@ body {
 .small-button:hover {
     background-color: red;
 }
+.control-dots {
+    display: none;
+  }

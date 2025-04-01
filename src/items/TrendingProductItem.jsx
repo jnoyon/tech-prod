@@ -113,7 +113,7 @@ export default function TrendingProductItem({ product }) {
                     >
                         {vote} <BiLike className='text-xl' />
                     </button>
-                    <Link to={`/products/${_id}`} className="btn btn-sm btn-primary text-white">
+                    <Link to={`/products/${_id}`} className="btn btn-sm btn-error text-white">
                         View Details
                     </Link>
                 </div>

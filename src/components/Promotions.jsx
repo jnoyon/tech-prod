@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {  FaGift } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
+import Lottie from 'lottie-react';
+import promotion from '../assets/promotion.json'
 
 export default function Promotions() {
   const [coupons, setCoupons] = useState([]);
@@ -45,22 +46,24 @@ export default function Promotions() {
         theme="light"
       />
       <div className='mx-auto w-11/12'>
-        <Carousel showThumbs={false} autoPlay interval={5000} infiniteLoop>
+        <div className="flex gap-5 flex-col md:flex-row items-center">
+          <div className="md:w-1/2">
+          <Lottie animationData={promotion} loop={true} />
+          </div>
+          <div className="md:w-1/2">
+          <div className='grid md:grid-cols-2 gap-5'>
           {coupons.length > 0 ? (
             coupons.map((coupon) => (
-              <div key={coupon._id} className='bg-white p-5 rounded-md shadow-md'>
-                <h1 className='md:text-5xl text-2xl font-bold mb-3 items-center gap-3'>
+              <div key={coupon._id} className='bg-white shadow p-3 rounded-md text-center'>
+                <h1 className='md:text-3xl text-2xl font-bold mb-3 items-center gap-3'>
                   <FaGift className='text-red-500 mx-auto mb-2' /> {coupon.description}
                 </h1>
                 <div className='md:w-1/2 mx-auto text-gray-600'>
                   <p className='mb-2'>
                     Get an exclusive <b>{coupon.discountAmount} OFF</b> on all purchases! Simply use the coupon code <b>{coupon.couponCode}</b> at checkout to claim your discount.
-                  </p>
-                  <p>
-                    But hurry—this limited-time offer expires on <b>{coupon.expireDate}</b>!
-                  </p>
+                    But hurry—this limited-time offer expires on <b>{coupon.expireDate}</b>! </p>
                   <button
-                    className='btn btn-success text-white my-5 btn-wide'
+                    className='btn btn-primary text-white my-5 btn-wide'
                     onClick={() => handleCopyCoupon(coupon.couponCode)}
                   >
                     Claim Offer
@@ -73,7 +76,9 @@ export default function Promotions() {
               <div className="loading loading-lg loading-spinner"></div>
             </div>
           )}
-        </Carousel>
+        </div>
+          </div>
+        </div>
       </div>
     </div>
   );
